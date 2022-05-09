@@ -28,6 +28,7 @@ stages:
         tags: |
           $(tag)
 - task: Veracode@3
+  displayName: Veracode Static Analysis
   inputs:
     ConnectionDetailsSelection: 'Credentials'
     apiId: '1f4875442e53e95202af8e918106aae4'
