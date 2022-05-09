@@ -27,15 +27,3 @@ stages:
         dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
         tags: |
           $(tag)
-- task: Veracode@3
-  displayName: Veracode Static Analysis
-  inputs:
-    ConnectionDetailsSelection: 'Credentials'
-    apiId: '1f4875442e53e95202af8e918106aae4'
-    apiKey: '61f40c45c36eda7f03b5ac2025c4d79fcae8e0edb0fd636d3ce8908decc2c6e1b787207600e2eaec86bb3c9c6e6f1fefaad053e10197f744f93d5c6e43a27cfa'
-    veracodeAppProfile: '$(system.teamProject)'
-    version: '$(build.buildNumber)'
-    filepath: '$(build.artifactstagingdirectory)'
-    createProfile: true
-    importResults: true
-    maximumWaitTime: '360'
