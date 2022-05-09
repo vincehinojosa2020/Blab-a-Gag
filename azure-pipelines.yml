@@ -35,4 +35,6 @@ stages:
               veracodeAppProfile: '$(system.teamProject)'
               version: '$(build.buildNumber)'
               filepath: '$(build.artifactstagingdirectory)'
+              createProfile: true
+              importResults: true
               maximumWaitTime: '360'
