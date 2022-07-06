@@ -27,16 +27,5 @@ stages:
         dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
         tags: |
           $(tag)
-    - task: Veracode@3
-      inputs:
-        ConnectionDetailsSelection: 'Credentials'
-        apiId: '193a4c1435c121cb9ba69ae64df581da'
-        apiKey: '1c4b05a4d67add18d74e715543f2aad8724e6c4b6296a127b6cad09bdbbdfaaf71c7b526e970e838260ca492e1d290481c3fd2ddf7c0567b5040324c9af6c41b'
-        veracodeAppProfile: '$(system.teamProject)'
-        version: '$(build.buildNumber)'
-        filepath: '$(build.artifactstagingdirectory)'
-        createProfile: true
-        failBuildIfUploadAndScanBuildStepFails: false
-        importResults: false
-        maximumWaitTime: '360'
+  
          
