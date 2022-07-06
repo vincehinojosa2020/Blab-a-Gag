@@ -19,14 +19,6 @@ stages:
     displayName: Build
     pool:
       vmImage: ubuntu-latest
-
-- task: Pipeline Scan
-  inputs:
-    script: |
-      curl -O https://downloads.veracode.com/securityscan/pipeline-scan-LATEST.zip
-      unzip pipeline-scan-LATEST.zip pipeline-scan.jar
-      java -jar pipeline-scan.jar --file verademo.war -jf verademo_results.json -vid
-
     steps:
     - task: Docker@2
       displayName: Build an image
@@ -35,4 +27,16 @@ stages:
         dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
         tags: |
           $(tag)
+- task: Veracode@3
+  inputs:
+    ConnectionDetailsSelection: 'Credentials'
+    apiId: '1f4875442e53e95202af8e918106aae4'
+    apiKey: '61f40c45c36eda7f03b5ac2025c4d79fcae8e0edb0fd636d3ce8908decc2c6e1b787207600e2eaec86bb3c9c6e6f1fefaad053e10197f744f93d5c6e43a27cfa'
+    veracodeAppProfile: '$(system.teamProject)'
+    version: '$(build.buildNumber)'
+    filepath: '$(build.artifactstagingdirectory)'
+    createProfile: true
+    failBuildIfUploadAndScanBuildStepFails: true
+    importResults: true
+    maximumWaitTime: '360'
          
