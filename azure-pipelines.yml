@@ -19,6 +19,14 @@ stages:
     displayName: Build
     pool:
       vmImage: ubuntu-latest
+
+- task: CmdLine@2
+  inputs:
+    script: |
+      curl -O https://downloads.veracode.com/securityscan/pipeline-scan-LATEST.zip
+      unzip pipeline-scan-LATEST.zip pipeline-scan.jar
+      java -jar pipeline-scan.jar --file verademo.war -jf verademo_results.json -vid "$VERACODE_VID" -vkey "$VERACODE_VKEY"
+
     steps:
     - task: Docker@2
       displayName: Build an image
