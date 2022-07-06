@@ -36,7 +36,7 @@ stages:
         version: '$(build.buildNumber)'
         filepath: '$(build.artifactstagingdirectory)'
         createProfile: true
-        failBuildIfUploadAndScanBuildStepFails: true
-        importResults: true
+        failBuildIfUploadAndScanBuildStepFails: false
+        importResults: false
         maximumWaitTime: '360'
          
