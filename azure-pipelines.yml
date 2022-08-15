@@ -35,5 +35,12 @@ stages:
                 Set-ExecutionPolicy AllSigned -Scope Process -Force
                 iex ((New-Object System.Net.WebClient).DownloadString('https://download.srcclr.com/ci.ps1'))
                 srcclr scan --url https://github.com/srcclr/example-ruby
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: |
+      http --auth-type=veracode_hmac "https://api.veracode.com/appsec/v1/applications?name={applicationName}"
+      
+      http --auth-type=veracode_hmac "https://api.veracode.com/srcclr/sbom/v1/targets/{applicationGuid}/cyclonedx?type=application"
           
          
