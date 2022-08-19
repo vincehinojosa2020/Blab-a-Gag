@@ -27,20 +27,13 @@ stages:
         dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
         tags: |
           $(tag)
-
-          - task: PowerShell@2
-            inputs:
-              targetType: 'inline'
-              script: |
-                Set-ExecutionPolicy AllSigned -Scope Process -Force
-                iex ((New-Object System.Net.WebClient).DownloadString('https://download.srcclr.com/ci.ps1'))
-                srcclr scan --url https://github.com/srcclr/example-ruby
-- task: PowerShell@2
+- task: Veracode@3
   inputs:
-    targetType: 'inline'
-    script: |
-      http --auth-type=veracode_hmac "https://api.veracode.com/appsec/v1/applications?name={applicationName}"
-      
-      http --auth-type=veracode_hmac "https://api.veracode.com/srcclr/sbom/v1/targets/{applicationGuid}/cyclonedx?type=application"
-          
-         
+    ConnectionDetailsSelection: 'Credentials'
+    apiId: '48726e0317db443b22e405e2eaac7ae8'
+    apiKey: '11b0d5aadce7892ec986c0d1408032bdd1cf73d5174710e2e549738720fc9eb1afa4e0d52e81e246225bc1cc00305bab2b00c4f2c87b3cf92cbc31750bb08711'
+    veracodeAppProfile: '$(system.teamProject)'
+    version: '$(build.buildNumber)'
+    filepath: '$(build.artifactstagingdirectory)'
+    createProfile: true
+    maximumWaitTime: '360'
